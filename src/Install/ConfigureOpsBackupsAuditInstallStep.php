@@ -11,6 +11,12 @@ use YezzMedia\Foundation\Install\OptionalInstallStep;
 
 final class ConfigureOpsBackupsAuditInstallStep implements AuditInstallStep, OptionalInstallStep
 {
+    private const DRIVER_WITHOUT_DEFAULT = "'driver' => env('OPS_BACKUPS_AUDIT_DRIVER'),";
+
+    private const DRIVER_WITH_ACTIVITYLOG_DEFAULT = "'driver' => env('OPS_BACKUPS_AUDIT_DRIVER', 'activitylog'),";
+
+    private const PACKAGE_CONFIG_PATH = __DIR__.'/../../config/ops-backups.php';
+
     public function key(): string
     {
         return 'configure_ops_backups_audit';
@@ -36,7 +42,7 @@ final class ConfigureOpsBackupsAuditInstallStep implements AuditInstallStep, Opt
         $configPath = config_path('ops-backups.php');
 
         if (! is_file($configPath)) {
-            throw new RuntimeException('Unable to configure ops backups audit because config/ops-backups.php is missing.');
+            $this->publishConfig($configPath);
         }
 
         $contents = file_get_contents($configPath);
@@ -45,13 +51,42 @@ final class ConfigureOpsBackupsAuditInstallStep implements AuditInstallStep, Opt
             throw new RuntimeException('Unable to read config/ops-backups.php while configuring ops backups audit.');
         }
 
-        $updated = str_replace("'driver' => env('OPS_BACKUPS_AUDIT_DRIVER'),", "'driver' => env('OPS_BACKUPS_AUDIT_DRIVER', 'activitylog'),", $contents, $count);
+        if (str_contains($contents, self::DRIVER_WITH_ACTIVITYLOG_DEFAULT)) {
+            return;
+        }
+
+        $updated = str_replace(self::DRIVER_WITHOUT_DEFAULT, self::DRIVER_WITH_ACTIVITYLOG_DEFAULT, $contents, $count);
 
         if ($count === 0) {
             throw new RuntimeException('Unable to locate ops backups audit driver configuration while configuring audit support.');
         }
 
-        file_put_contents($configPath, $updated);
+        if (file_put_contents($configPath, $updated) === false) {
+            throw new RuntimeException('Unable to write config/ops-backups.php while configuring ops backups audit.');
+        }
+    }
+
+    private function publishConfig(string $path): void
+    {
+        if (! is_file(self::PACKAGE_CONFIG_PATH) || ! is_readable(self::PACKAGE_CONFIG_PATH)) {
+            throw new RuntimeException('Unable to read the ops backups package config while configuring audit support.');
+        }
+
+        $directory = dirname($path);
+
+        if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) {
+            throw new RuntimeException('Unable to create the config directory for ops backups audit configuration.');
+        }
+
+        $contents = file_get_contents(self::PACKAGE_CONFIG_PATH);
+
+        if ($contents === false) {
+            throw new RuntimeException('Unable to load the ops backups package config while configuring audit support.');
+        }
+
+        if (file_put_contents($path, $contents) === false) {
+            throw new RuntimeException('Unable to publish config/ops-backups.php while configuring ops backups audit.');
+        }
     }
 
     public function isOptional(): bool

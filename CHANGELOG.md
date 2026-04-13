@@ -2,6 +2,13 @@
 
 All notable changes to `yezzmedia/laravel-ops-backups` will be documented in this file.
 
+## [0.1.1] - 2026-04-13
+
+### Fixed
+
+- published the host `config/ops-backups.php` file automatically inside the audit install flow when it was missing
+- kept ops backups audit configuration working for Basecamp and other audit-only installs that do not run ordinary publish steps first
+
 ## [0.1.0] - 2026-04-09
 
 ### Added
