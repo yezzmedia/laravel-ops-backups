@@ -1,6 +1,6 @@
 {
     "name": "yezzmedia/laravel-ops-backups",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "Ops-facing backup posture, retention visibility, and restore readiness package for the Yezz Media Laravel platform.",
     "type": "library",
     "license": "proprietary",
@@ -11,7 +11,7 @@
         "illuminate/contracts": "^13.0",
         "illuminate/support": "^13.0",
         "spatie/laravel-package-tools": "^1.92",
-        "yezzmedia/laravel-foundation": "^0.1"
+        "yezzmedia/laravel-foundation": "^0.2"
     },
     "require-dev": {
         "larastan/larastan": "^3.0",
