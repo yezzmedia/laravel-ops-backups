@@ -2,6 +2,14 @@
 
 All notable changes to `yezzmedia/laravel-ops-backups` will be documented in this file.
 
+## [Unreleased]
+
+## [0.2.0] - 2026-06-30
+
+### Changed
+
+- Bumped minimum `yezzmedia/laravel-foundation` dependency to `^0.2`
+
 ## [0.1.1] - 2026-04-13
 
 ### Fixed

@@ -1,8 +1,27 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/yezzmedia/.github/main/profile/yezzmedia-dark.svg">
+    <img src="https://raw.githubusercontent.com/yezzmedia/.github/main/profile/yezzmedia-light.svg" alt="Yezz Media" height="40">
+  </picture>
+</p>
+
+<p align="center">
+  <a href="https://packagist.org/packages/yezzmedia/laravel-ops-backups"><img src="https://img.shields.io/packagist/v/yezzmedia/laravel-ops-backups?style=flat-square" alt="Latest Version"></a>
+  <a href="https://packagist.org/packages/yezzmedia/laravel-ops-backups"><img src="https://img.shields.io/packagist/php-v/yezzmedia/laravel-ops-backups?style=flat-square" alt="PHP Version"></a>
+  <a href="https://packagist.org/packages/yezzmedia/laravel-ops-backups"><img src="https://img.shields.io/packagist/l/yezzmedia/laravel-ops-backups?style=flat-square" alt="License"></a>
+</p>
+
+---
+
 # Laravel Ops Backups
 
 `yezzmedia/laravel-ops-backups` is the Yezz Media ops-facing package for backup posture, retention visibility, restore readiness, and backup failure reporting.
 
 It is intentionally a visibility and metadata package, not a backup execution engine.
+
+## Version
+
+Current release: `0.2.0`
 
 ## V1 Scope
 
