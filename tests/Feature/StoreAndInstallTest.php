@@ -24,12 +24,12 @@ it('reports the store as not ready when a required table is missing', function (
         ->and($result->context['missing_tables'])->toBe(['ops_backup_artifacts']);
 });
 
-it('refuses to run store migrations when migrations are disabled', function (): void {
+it('returns without throwing when migrations are disabled on a partial store', function (): void {
     Schema::drop('ops_backup_artifacts');
 
     $step = app(EnsureOpsBackupsStoreReadyInstallStep::class);
 
-    expect(fn () => $step->handle(new InstallContext(allowMigrations: false)))->toThrow(
+    expect(fn () => $step->handle(new InstallContext(allowMigrations: false)))->not->toThrow(
         RuntimeException::class,
         'Ops backups store has a partial table set. Resolve the partial state before continuing.',
     );
